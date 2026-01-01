@@ -19,7 +19,7 @@
   <Category/>
   <WebUI>http://[IP]:[PORT:6789]/</WebUI>
   <TemplateURL/>
-  <Icon>https://web.thuid.org/unraid_icons/Orange-Flat-Collection/orange-yt-dlp.svg</Icon>
+  <Icon>https://github.com/Thuid/ytdlparr/blob/main/orange-yt-dlp.svg</Icon>
   <ExtraParams/>
   <PostArgs/>
   <CPUset>8,9,22,23</CPUset>
