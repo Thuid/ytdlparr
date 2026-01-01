@@ -1,100 +1,43 @@
 <?xml version="1.0"?>
-<Container>
-  <Name>YTDLParr</Name>
-  <Repository>yourdockerhubusername/ytdlparr:latest</Repository>
-  <Registry>https://hub.docker.com/r/yourdockerhubusername/ytdlparr</Registry>
+<Container version="2">
+  <Name>ytdlparr</Name>
+  <Repository>thuid/ytdlparr:latest</Repository>
+  <Registry>https://hub.docker.com/r/thuid/ytdlparr</Registry>
   <Network>bridge</Network>
   <MyIP/>
   <Shell>bash</Shell>
   <Privileged>false</Privileged>
-  <Support/>
-  <Project/>
+  <Support>https://github.com/Thuid/ytdlparr</support>
+  <Project>https://github.com/Thuid/ytdlparr</Project>
+  <ReadMe/>
+  <Overview>YTDLParr is a full NZBGet-compatible downloader built around yt-dlp.&#13;
+	&#13;
+	It supports Sonarr/Radarr integration, parallel download slots,&#13;
+	per-category arguments, retries, RSS feeds, a built-in web UI,&#13;
+	authentication, and persistent state.&#13;
   <Overview>
-    YTDLParr is a full NZBGet-compatible downloader built around yt-dlp. 
-    It supports Sonarr/Radarr integration, parallel download slots, 
-    per-category arguments, retries, RSS feeds, a built-in web UI, 
-    authentication, and persistent state.
-  </Overview>
-  <Category>Downloaders: MediaAutomation</Category>
-
+  <Category/>
   <WebUI>http://[IP]:[PORT:6789]/</WebUI>
-
-  <Icon>https://raw.githubusercontent.com/yourrepo/ytdlparr/main/icon.png</Icon>
-
-  <ExtraParams></ExtraParams>
-
-  <Environment>
-    <Variable>
-      <Name>TEMP_DIR</Name>
-      <Value>/temp</Value>
-      <Description>Temporary directory for in-progress downloads</Description>
-    </Variable>
-    <Variable>
-      <Name>MAX_RETRIES</Name>
-      <Value>2</Value>
-      <Description>Number of automatic retry attempts for failed downloads</Description>
-    </Variable>
-    <Variable>
-      <Name>CATEGORY_ARGS</Name>
-      <Value>tv=--format bestvideo[height<=1080]+bestaudio/best;anime=--format best</Value>
-      <Description>Per-category yt-dlp arguments</Description>
-    </Variable>
-    <Variable>
-      <Name>MAX_SLOTS</Name>
-      <Value>3</Value>
-      <Description>Maximum number of parallel downloads</Description>
-    </Variable>
-    <Variable>
-      <Name>UI_USERNAME</Name>
-      <Value>admin</Value>
-      <Description>Web UI login username</Description>
-    </Variable>
-    <Variable>
-      <Name>UI_PASSWORD</Name>
-      <Value>password</Value>
-      <Description>Web UI login password</Description>
-    </Variable>
-    <Variable>
-      <Name>SECRET_KEY</Name>
-      <Value>changeme</Value>
-      <Description>Flask session secret key</Description>
-    </Variable>
-    <Variable>
-      <Name>RSS_FEEDS</Name>
-      <Value></Value>
-      <Description>Optional RSS feeds: url,category;url2,category2</Description>
-    </Variable>
-  </Environment>
-
-  <Data>
-    <Volume>
-      <HostDir>/mnt/user/appdata/ytdlparr</HostDir>
-      <ContainerDir>/config</ContainerDir>
-      <Mode>rw</Mode>
-      <Description>Persistent config and state</Description>
-    </Volume>
-    <Volume>
-      <HostDir>/mnt/user/downloads</HostDir>
-      <ContainerDir>/downloads</ContainerDir>
-      <Mode>rw</Mode>
-      <Description>Final download directory</Description>
-    </Volume>
-    <Volume>
-      <HostDir>/mnt/user/downloads/tmp</HostDir>
-      <ContainerDir>/temp</ContainerDir>
-      <Mode>rw</Mode>
-      <Description>Temporary download directory</Description>
-    </Volume>
-  </Data>
-
-  <Ports>
-    <Port>
-      <HostPort>6789</HostPort>
-      <ContainerPort>6789</ContainerPort>
-      <Protocol>tcp</Protocol>
-      <Description>Web UI / NZBGet API</Description>
-    </Port>
-  </Ports>
-
-  <Config Name="WebUI" Target="6789" Default="6789" Mode="tcp" Description="Web UI Port" Type="Port" Display="always"/>
+  <TemplateURL/>
+  <Icon>https://web.thuid.org/unraid_icons/Orange-Flat-Collection/orange-yt-dlp.svg</Icon>
+  <ExtraParams/>
+  <PostArgs/>
+  <CPUset>8,9,22,23</CPUset>
+  <DateInstalled>1767295136</DateInstalled>
+  <DonateText>If you like and want to support my work please feel free to donate.</DonateText>
+  <DonateLink>https://www.paypal.me/thuid</DonateLink>
+  <Requires/>
+  <Config Name="AppData" Target="/config" Default="/mnt/user/appdata/ytdlparr/config" Mode="rw" Description="Persistent config and state" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/ytdlparr/config</Config>
+  <Config Name="Download Temp Directory" Target="/temp" Default="/mnt/user/appdata/ytdlparr/temp" Mode="rw" Description="" Type="Path" Display="always" Required="false" Mask="false">/mnt/user/temp_downloads/ytdlparr/temp</Config>
+  <Config Name="TEMP_DIR" Target="TEMP_DIR" Default="/temp" Mode="" Description="Internal temporary directory for in-progress downloads" Type="Variable" Display="always" Required="false" Mask="false">/temp</Config>
+  <Config Name="Finished Download Directory" Target="/downloads" Default="" Mode="rw" Description="Final download directory" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/temp_downloads/complete/</Config>
+  <Config Name="WebUI Port" Target="6789" Default="6789" Mode="tcp" Description="Web UI / NZBGet API" Type="Port" Display="always" Required="true" Mask="false">6789</Config>
+  <Config Name="WebUI Username" Target="UI_USERNAME" Default="admin" Mode="" Description="Web UI login username" Type="Variable" Display="always" Required="true" Mask="false">thuid</Config>
+  <Config Name="WebUI Password" Target="UI_PASSWORD" Default="admin" Mode="" Description="Web UI login password" Type="Variable" Display="always" Required="true" Mask="true">HappyFuntime1;</Config>
+  <Config Name="Flask Secret Key" Target="SECRET_KEY" Default="CHANGE ME" Mode="" Description="Flask session secret key (32 hex chars). Generate with: openssl rand -hex 32" Type="Variable" Display="always" Required="true" Mask="false">39acae0dc3057f6e45dce8caa34e3e5611f24c3f2181d8a3ead42b145cc50eab</Config>
+  <Config Name="RSS Feeds" Target="RSS_FEEDS" Default="" Mode="" Description="Optional RSS feeds: url,category;url2,category2" Type="Variable" Display="always" Required="false" Mask="false"/>
+  <Config Name="Max Retries" Target="MAX_RETRIES" Default="2" Mode="" Description="Number of automatic retry attempts" Type="Variable" Display="always" Required="false" Mask="false">2</Config>
+  <Config Name="Max Slots" Target="MAX_SLOTS" Default="3" Mode="" Description="Maximum number of parallel downloads" Type="Variable" Display="always" Required="false" Mask="false">3</Config>
+  <Config Name="Category YT-DLP Args" Target="" Default="tv=--format bestvideo[height" Mode="" Description="Per-category yt-dlp arguments" Type="Variable" Display="always" Required="false" Mask="false">tv=--format bestvideo[height=1080]+bestaudio/best;anime=--format best</Config>
+  <TailscaleStateDir/>
 </Container>
