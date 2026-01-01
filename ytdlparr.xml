@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<Container>
+  <Name>YTDLParr</Name>
+  <Repository>yourdockerhubusername/ytdlparr:latest</Repository>
+  <Registry>https://hub.docker.com/r/yourdockerhubusername/ytdlparr</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+  <Support/>
+  <Project/>
+  <Overview>
+    YTDLParr is a full NZBGet-compatible downloader built around yt-dlp. 
+    It supports Sonarr/Radarr integration, parallel download slots, 
+    per-category arguments, retries, RSS feeds, a built-in web UI, 
+    authentication, and persistent state.
+  </Overview>
+  <Category>Downloaders: MediaAutomation</Category>
+
+  <WebUI>http://[IP]:[PORT:6789]/</WebUI>
+
+  <Icon>https://raw.githubusercontent.com/yourrepo/ytdlparr/main/icon.png</Icon>
+
+  <ExtraParams></ExtraParams>
+
+  <Environment>
+    <Variable>
+      <Name>TEMP_DIR</Name>
+      <Value>/temp</Value>
+      <Description>Temporary directory for in-progress downloads</Description>
+    </Variable>
+    <Variable>
+      <Name>MAX_RETRIES</Name>
+      <Value>2</Value>
+      <Description>Number of automatic retry attempts for failed downloads</Description>
+    </Variable>
+    <Variable>
+      <Name>CATEGORY_ARGS</Name>
+      <Value>tv=--format bestvideo[height<=1080]+bestaudio/best;anime=--format best</Value>
+      <Description>Per-category yt-dlp arguments</Description>
+    </Variable>
+    <Variable>
+      <Name>MAX_SLOTS</Name>
+      <Value>3</Value>
+      <Description>Maximum number of parallel downloads</Description>
+    </Variable>
+    <Variable>
+      <Name>UI_USERNAME</Name>
+      <Value>admin</Value>
+      <Description>Web UI login username</Description>
+    </Variable>
+    <Variable>
+      <Name>UI_PASSWORD</Name>
+      <Value>password</Value>
+      <Description>Web UI login password</Description>
+    </Variable>
+    <Variable>
+      <Name>SECRET_KEY</Name>
+      <Value>changeme</Value>
+      <Description>Flask session secret key</Description>
+    </Variable>
+    <Variable>
+      <Name>RSS_FEEDS</Name>
+      <Value></Value>
+      <Description>Optional RSS feeds: url,category;url2,category2</Description>
+    </Variable>
+  </Environment>
+
+  <Data>
+    <Volume>
+      <HostDir>/mnt/user/appdata/ytdlparr</HostDir>
+      <ContainerDir>/config</ContainerDir>
+      <Mode>rw</Mode>
+      <Description>Persistent config and state</Description>
+    </Volume>
+    <Volume>
+      <HostDir>/mnt/user/downloads</HostDir>
+      <ContainerDir>/downloads</ContainerDir>
+      <Mode>rw</Mode>
+      <Description>Final download directory</Description>
+    </Volume>
+    <Volume>
+      <HostDir>/mnt/user/downloads/tmp</HostDir>
+      <ContainerDir>/temp</ContainerDir>
+      <Mode>rw</Mode>
+      <Description>Temporary download directory</Description>
+    </Volume>
+  </Data>
+
+  <Ports>
+    <Port>
+      <HostPort>6789</HostPort>
+      <ContainerPort>6789</ContainerPort>
+      <Protocol>tcp</Protocol>
+      <Description>Web UI / NZBGet API</Description>
+    </Port>
+  </Ports>
+
+  <Config Name="WebUI" Target="6789" Default="6789" Mode="tcp" Description="Web UI Port" Type="Port" Display="always"/>
+</Container>
